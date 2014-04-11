@@ -1,1 +1,0 @@
-This repo has the source code for thejamesnash.com in it. Simple really.
