@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Autocaller</title>
+    </head>
+    <body>
+        <ul>
+            <li>
+                <label for="number">What's the number?</label>
+                <input type="tel" id="number"/>
+            </li>
+            <li>
+                <label for="delay">How long do you want to wait?</label>
+                <input type="tel" id="delay"/>
+            </li>
+            <li>
+                <button id="set">Set autocall</button>
+            </li>
+        </ul>
+        <p><a href="" id="dialler">Call now</a></p>
+        <script>
+            document.getElementById('set').addEventListener('click',function(){
+                var timeout = document.getElementById('delay').value;
+                var dialler = document.getElementById('dialler');
+                dialler.setAttribute('href','tel:' + document.getElementById('number').value);
+                setTimeout(function(){
+                    dialler.click();
+                },timeout);
+            });
+        </script>
+    </body>
+</html>
