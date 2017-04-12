@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <title>Python handler</title>
+    </head>
+    <body>
+        <ul>
+            <li>
+                <label for="delayInput">Delay</label>
+                <input type="tel" id="delayInput" />
+            </li>
+            <li>
+                <label for="angleInput">Angle</label>
+                <input type="tel" id="angleInput" />
+            </li>
+            <li>
+                <button id="startScan">Start scan</button>
+            </li>
+            <li>
+                <button id="stopScan">Stop scan</button>
+            </li>
+        </ul>
+        <script>
+            // Define our variables
+            var angleInput = document.getElementById('angleInput');
+            var delayInput = document.getElementById('delayInput');
+            var startButton = document.getElementById('startScan');
+            var stopButton = document.getElementById('stopScan');
+            
+            // Define an AJAX request
+            var ajax = function(url,callback,param) {
+                var request = new XMLHttpRequest();
+                request.open("POST", url, true);
+                // This may not be the correct request header for Python - you'll have to do some research
+                request.setRequestHeader("Content-type", "application/json");
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4 && request.status == 200) {
+                        // This is where your callback function would be called if the AJAX request was successful
+                        if( callback ){
+                            callback(request.responseText);    
+                        } else {
+                            console.log(request.responseText);
+                        }
+                    }
+                }
+                request.send();
+            };
+            
+            // Define our scanning function
+            var radarScan = function(userDelay,userAngle){
+                // This console just prints the values to the browser inspection console
+                console.info('Delay is: ' + userDelay);
+                console.info('Angle is: ' + userAngle);
+                
+                // Set a parameters variable to pass into the python script
+                var parameters = {'userDelay':userDelay,'userAngle':userAngle};
+                
+                // Here you'd fire your Python script maybe through AJAX?
+                // Assuming Pyhton script is called radar.py
+                // Null is referring to an optional callback function when the AJAX call is complete
+                // You'd use it to provide your GUI with some form of status report
+                console.log('Data is being sent to the AJAX function');
+                ajax('radar.py',null,parameters);
+            };
+
+            startButton.addEventListener('click',function(evt){
+                evt.preventDefault();
+                console.log('Start scan has been clicked');
+                var angleValue = angleInput.value;
+                var delayValue = delayInput.value;
+                radarScan(delayValue,angleValue);
+            });
+            
+            stopButton.addEventListener('click',function(evt){
+                evt.preventDefault();
+                console.log('Stop scan has been clicked');
+                // You'd call your stop scan function here
+            });
+            
+        </script>
+    </body>
+</html>
