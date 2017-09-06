@@ -38,15 +38,7 @@ title: gxp
               </ol>
             </fieldset>
           </section>
-          <aside class="component-library">
-          <ul>
-          {% for component in site.components %}
-          <li data-tags="{{ component.tags }}">
-          <h2><a href="{{component.url}}">{{ component.title }}</a></h2>
-          </li>
-          {% endfor %}
-          </ul>
-          </aside>
+          
           <script>
 
           var sha;
